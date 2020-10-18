@@ -59,7 +59,11 @@ class Graph(T2OBase):
         # operators
         for i in range(self.graph.OperatorsLength()):
             logger.debug("Parsing operator: %d", i)
+            print("Parsing operator: %d", i)
             op = self.OPCFactory.create(i)
+            if i is 54:
+                b = 1
+                
             op.parse()
             self.ops.append(op)
 

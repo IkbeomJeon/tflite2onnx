@@ -147,6 +147,9 @@ class OpFactory:
     def create(self, index):
         op = self.graph.Operators(index)
         opcode = self.model.OperatorCodes(op.OpcodeIndex()).BuiltinCode()
+        if opcode is 67:
+                a = 1
+                
         if opcode not in OpFactory.registry:
             raise NotImplementedError("Unsupported TFLite OP: {}".format(opcode))
 
