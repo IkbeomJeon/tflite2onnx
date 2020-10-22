@@ -7,9 +7,9 @@ from tflite2onnx.op.common import Operator
 logger = logging.getLogger('tflite2onnx')
 
 
-class Log(Operator):
+class Logistic(Operator):
     TypeMapping = {
-        tflite.BuiltinOperator.LOG: 'Log',
+        tflite.BuiltinOperator.LOGISTIC: 'Logistic',
     }
 
     def __init__(self, TFactory, index):
@@ -18,7 +18,7 @@ class Log(Operator):
 
     @property
     def type(self):
-        return 'Log'
+        return 'Logistic'
         
 
     def parse(self):

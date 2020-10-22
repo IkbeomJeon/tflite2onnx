@@ -2,23 +2,34 @@ import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 import tensorflow as tf
 
-
+defaultPath = '.\\assets\\tests\\'
 # inputs
-x = tf.keras.Input((20, 30, 128), dtype='float32', name='x')
+iN = 1
+iW = 1
+iH = 2
+iC = 3
+iM = iC
+
+x = tf.keras.Input((iH, iW, iC), dtype='float32', name='x')
 
 
 # operator
-transposeConv = tf.keras.layers.Conv2DTranspose(filters=3, kernel_size = (2,2), strides = (2, 2))
+tconv = tf.keras.layers.Conv2DTranspose(
+    filters=iM, kernel_size = (2,2), strides = (2, 2), use_bias = False)
+tconv_Relu = tf.keras.layers.Conv2DTranspose(
+    filters=iM, kernel_size = (2,2), strides = (2, 2), use_bias = False, activation ='relu')
 
 
 # build Keras model
 model_log = tf.keras.Model(x, tf.keras.backend.log(x))
-model_conv = tf.keras.Model(x, transposeConv(x))
+model_tconv = tf.keras.Model(x, tconv(x))
+model_tconv_relu = tf.keras.Model(x, tconv_Relu(x))
 
 
 export_model_list = {
-    'log.float32': model_log, 
-    'transpose_conv.float32' : model_conv
+    #'log.float32': model_log, 
+    'conv-transpose.float32' : model_tconv,
+    #'conv-transpose_relu.float32' : model_tconv_relu,
     }
  
 
@@ -29,7 +40,7 @@ for filename, model in export_model_list.items():
     buf = converter.convert()
 
     # save it
-    with open(filename, 'wb') as f:
+    with open(defaultPath+filename+'.tflite', 'wb') as f:
         f.write(buf)
     
 

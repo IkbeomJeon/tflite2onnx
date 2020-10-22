@@ -26,6 +26,7 @@ def end2end_test(model_name, use_layout):
 def test_ops_implicit_layout():
     # this ops will stop layout propagation
     OP_LIST = (
+        
         'avgpooling.float32',
         'avgpool-concat.float32',
         'conv.float32',
@@ -38,7 +39,7 @@ def test_ops_implicit_layout():
         'fullyconnected.float32',
         'fullyconnected-relu6.float32',
         'maxpooling.float32',
-        'transpose-conv.float32',
+        'conv-transpose.float32',
     )
 
     for op in OP_LIST:
@@ -68,12 +69,14 @@ def test_ops_post_propagation():
 def test_ops_layout_transparent():
     # this ops are very wild :)
     OP_LIST = (
+        
         'abs.float32',
         'add.float32',
         'add-relu.float32',
         'mul.float32',
         'relu6.float32',
         'relu.float32',
+        'log.float32',
     )
 
     for op in OP_LIST:
@@ -83,7 +86,8 @@ def test_ops_layout_transparent():
 def test_networks():
     NETWORK_LIST = (
         #'mobilenet_v1_0.25_128',
-        'object_detection_3d_sneakers',
+        #'object_detection_3d_sneakers',
+        
     )
 
     for net in NETWORK_LIST:
@@ -92,6 +96,6 @@ def test_networks():
 
 if __name__ == '__main__':
     test_ops_implicit_layout()
-    test_ops_post_propagation()
-    test_ops_layout_transparent()
-    test_networks()
+    #test_ops_post_propagation()
+    #test_ops_layout_transparent()
+    #test_networks()

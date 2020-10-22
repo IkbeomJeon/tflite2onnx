@@ -66,37 +66,38 @@ class ConvTranspose(Operator):
         
         # X
         ilayout = Layout('NHWC', 'NCHW')
-        X = self.parseInput(2, ilayout)
-        
+        self.parseInput(2, ilayout)
+  
         # weight
-        wlayout = Layout('CHWM', 'CMHW') 
+        wlayout = Layout('CHWM', 'MCHW') 
         W = self.parseInput(1, wlayout)
     
         # output
         olayout = Layout('NHWC', 'NCHW')
         O = self.parseOutput(0, olayout)
-        #assert(output.shape == output_shape)
-        
+        os = O.shape
+        os_olayout = olayout.transform(os)
+                
         # options
         op_opt = op.BuiltinOptions()
-    
         option = tflite.TransposeConvOptions()
-                               
         option.Init(op_opt.Bytes, op_opt.Pos)        
+     
         
-        os = self.outputs[0].shape
-        self.attrs['output_shape'] = [os[0], os[3], os[1], os[2]]
+        # set attributes                
+        self.attrs['output_shape'] = os_olayout
         self.attrs['dilations'] = [1, 1]
-        self.attrs['group'] = W.shape[3]
+        self.attrs['group'] = 1
         self.attrs['auto_pad'] = PaddingMapping[option.Padding()]
         self.attrs['kernel_shape'] = W.shape[1:3]  
         self.attrs['strides'] = [option.StrideH(), option.StrideW()]
+        #self.attrs['pads']
         
-        
+        '''
         self.attrs['pads_debug'] = computePaddingSize(option.Padding(), X.shape[1:3],
                                                 self.attrs['kernel_shape'],
                                                 self.attrs['strides'], self.attrs['dilations'])
-        
+        '''
         
         #it is required, but not supported in TransposeConvOption in tflite.
         #handleFusedActivation(self, option, ot)  
