@@ -56,7 +56,7 @@ class Model(T2OBase):
         logger.debug("saving model as %s", path)
         assert(self.status.converted)
         onnx.save(self.onnx, path)
-        onnx.checker.check_model(path)
+        onnx.checker.check_model(path, False)
 
     @property
     def shorty(self):

@@ -38,6 +38,7 @@ def test_ops_implicit_layout():
         'fullyconnected.float32',
         'fullyconnected-relu6.float32',
         'maxpooling.float32',
+        'transpose-conv.float32',
     )
 
     for op in OP_LIST:
@@ -81,7 +82,8 @@ def test_ops_layout_transparent():
 
 def test_networks():
     NETWORK_LIST = (
-        'mobilenet_v1_0.25_128',
+        #'mobilenet_v1_0.25_128',
+        'object_detection_3d_sneakers',
     )
 
     for net in NETWORK_LIST:
