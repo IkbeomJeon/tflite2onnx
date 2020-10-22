@@ -1,27 +1,35 @@
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 import tensorflow as tf
-import numpy as np
-import tflite
+
 
 # inputs
-x = tf.keras.Input((20, 30, 3), dtype='float32', name='a')
+x = tf.keras.Input((20, 30, 128), dtype='float32', name='x')
+
 
 # operator
-ctlayer = tf.keras.layers.Conv2DTranspose(filters=3, kernel_size = (2,2), strides = (2, 2))
+transposeConv = tf.keras.layers.Conv2DTranspose(filters=3, kernel_size = (2,2), strides = (2, 2))
 
 
 # build Keras model
-model = tf.keras.Model(x, ctlayer(x))
-model.summary()
+model_log = tf.keras.Model(x, tf.keras.backend.log(x))
+model_conv = tf.keras.Model(x, transposeConv(x))
+
+
+export_model_list = {
+    'log.float32': model_log, 
+    'transpose_conv.float32' : model_conv
+    }
+ 
 
 # convert to TFLite model
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-buf = converter.convert()
 
-filename_save = 'transpose_conv.float32'
-# save it
-with open(filename_save+'.tflite', 'wb') as f:
-    f.write(buf)
+for filename, model in export_model_list.items():
+    converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    buf = converter.convert()
+
+    # save it
+    with open(filename, 'wb') as f:
+        f.write(buf)
     
 
