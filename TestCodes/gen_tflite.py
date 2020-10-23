@@ -1,8 +1,14 @@
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 import tensorflow as tf
+import numpy as np
 
-defaultPath = '.\\assets\\tests\\'
+@tf.function
+def LogisticRegression(inputs):
+
+    return 1 / (1 + np.exp(-x))
+
+defaultPath = '..\\assets\\tests\\'
 # inputs
 iN = 1
 iW = 1
@@ -18,6 +24,8 @@ tconv = tf.keras.layers.Conv2DTranspose(
     filters=iM, kernel_size = (2,2), strides = (2, 2), use_bias = False)
 tconv_Relu = tf.keras.layers.Conv2DTranspose(
     filters=iM, kernel_size = (2,2), strides = (2, 2), use_bias = False, activation ='relu')
+
+lr = LogisticRegression(x)
 
 
 # build Keras model

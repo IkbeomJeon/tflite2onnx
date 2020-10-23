@@ -14,7 +14,7 @@ from tflite2onnx.layout import Layout
 filename = 'conv-transpose.float32'
 
 tflite_path = f'assets/tests/{filename}.tflite'
-onnx_path = f'./{filename}.onnx'
+onnx_path = f'../{filename}.onnx'
 
 
 model_onnx = onnx.load(onnx_path)

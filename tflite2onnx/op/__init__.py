@@ -19,6 +19,7 @@ from tflite2onnx.op.conv_transpose import ConvTranspose
 from tflite2onnx.op.log import Log
 from tflite2onnx.op.logistic import Logistic
 
+
 OpFactory.register(Binary)
 OpFactory.register(Concat)
 OpFactory.register(Conv)
