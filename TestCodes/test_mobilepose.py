@@ -7,19 +7,15 @@ import seaborn as sns; #sns.set_theme()
 import matplotlib.pyplot as plt
 import time
 
-targetdir = '../assets/tests'
-
 
 #image_path = './samples/shose/1866.png'
-image_path = '../../samples/shose/shose9.jpg'
+image_path = 'e:/samples/shose/shose9.jpg'
 #image_path = './samples/chair/chair5.jpg'
 
 
 # Load the TFLite model and allocate tensors.
 #model_path = 'models/object_detection_3d_chair.tflite'
-filename = 'object_detection_3d_sneakers'
-tflite_path = f'{targetdir}/{filename}.tflite'
-
+tflite_path = 'e:/models/mp-shose.tflite'
 
 interpreter = tflite.Interpreter(tflite_path)
 interpreter.allocate_tensors()
