@@ -85,8 +85,9 @@ def test_ops_layout_transparent():
 def test_networks():
     NETWORK_LIST = (
         #'mobilenet_v1_0.25_128',
-        #'object_detection_3d_sneakers',
-        'object_detection_3d_chair',
+        #'object_detection_3d_sneakers_1stage',
+        #'object_detection_3d_chair',
+        'ssdlite_object_detection',
         
     )
 
