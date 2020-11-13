@@ -24,7 +24,7 @@ def end2end_test(model_name, use_layout):
 
 
 def test_ops_implicit_layout():
-    # this ops will stop layout propagation
+    # these ops will stop layout propagation
     OP_LIST = (
         'avgpooling.float32',
         'avgpool-concat.float32',
@@ -38,8 +38,6 @@ def test_ops_implicit_layout():
         'fullyconnected.float32',
         'fullyconnected-relu6.float32',
         'maxpooling.float32',
-        'conv-transpose.float32',
-        'conv-transpose_relu.float32',
     )
 
     for op in OP_LIST:
@@ -47,7 +45,7 @@ def test_ops_implicit_layout():
 
 
 def test_ops_post_propagation():
-    # this ops need post-propagation handling
+    # these ops need post-propagation handling
     OP_LIST = (
         'concat.float32',
         'mean.float32',
@@ -60,7 +58,6 @@ def test_ops_post_propagation():
         'stridedslice-stride.float32',
         'stridedslice.float32',
         'transpose.float32',
-
     )
 
     for op in OP_LIST:
@@ -68,7 +65,7 @@ def test_ops_post_propagation():
 
 
 def test_ops_layout_transparent():
-    # this ops are very wild :)
+    # these ops are very wild :)
     OP_LIST = (
         'abs.float32',
         'add.float32',
@@ -82,21 +79,7 @@ def test_ops_layout_transparent():
         end2end_test(op, 'NHWC')
 
 
-def test_networks():
-    NETWORK_LIST = (
-        #'mobilenet_v1_0.25_128',
-        #'object_detection_3d_sneakers_1stage',
-        #'object_detection_3d_chair',
-        'ssdlite_object_detection',
-        
-    )
-
-    for net in NETWORK_LIST:
-        end2end_test(net, 'NCHW')
-
-
 if __name__ == '__main__':
-    #test_ops_implicit_layout()
-    #test_ops_post_propagation()
-    #test_ops_layout_transparent()
-    test_networks()
+    test_ops_implicit_layout()
+    test_ops_post_propagation()
+    test_ops_layout_transparent()
