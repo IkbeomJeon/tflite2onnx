@@ -26,7 +26,7 @@ class Slice(Operator):
 
         op = self.tflite
         opcode = self.model.OperatorCodes(op.OpcodeIndex()).BuiltinCode()
-        assert(opcode is tflite.BuiltinOperator.STRIDED_SLICE)
+        assert(opcode in self.TypeMapping)
 
         assert(op.InputsLength() == 4)
         assert(op.OutputsLength() == 1)
@@ -74,7 +74,7 @@ class Slice(Operator):
 
         # axis, we create from empty
         axis = np.arange(rank)
-        at = self.TFactory.createVector(bt, axis)
+        at = self.TFactory.createVector(axis.astype('int32'))
         at.addConsumer(self)
         self.inputs.append(at)
 
